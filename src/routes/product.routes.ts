@@ -5,6 +5,6 @@ import { authMiddleware } from "../middlewares/auth.middleware"
 const router = Router()
 
 router.get("/", authMiddleware, getProducts)
-router.post("/", authMiddleware, createProduct)
+router.post("/create", authMiddleware, createProduct)
 
 export default router
