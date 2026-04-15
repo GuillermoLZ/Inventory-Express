@@ -1,12 +1,21 @@
-version: "3"
-services: 
-  db:
-    image: postgres
-    environment:
-      POSTGRES_PASSWORD: admin
-      POSTGRES_USER: postgres
-      POSTGRES_DB: inventory
-  app:
-    image: my-node-app
+services:
+  api:
+    build: .
+    container_name: inventory-api
     ports:
-      - 13000:3000
+      - "3000:3000"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://postgres:admin@postgres:5432/inventory
+
+  postgres:
+    image: postgres:15
+    container_name: inventory-db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: inventory
