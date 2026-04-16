@@ -4,6 +4,7 @@ import { GetProductsUseCase } from "@modules/products/application/use-cases/get-
 import { GetProductUseCase } from "@modules/products/application/use-cases/get-product.usecase"
 import { UpdateProductUseCase } from "@modules/products/application/use-cases/update-product.usecase"
 import { DeleteProductUseCase } from "@modules/products/application/use-cases/delete-product.usecase"
+import { asyncHandler } from "@shared/utils/async-handle"
 
 export class ProductController {
 
@@ -15,53 +16,35 @@ export class ProductController {
     private deleteProduct: DeleteProductUseCase
   ) {}
 
-  create = async (req: Request, res: Response) => {
-
+  create = asyncHandler(async (req: Request, res: Response) => {
     const product = await this.createProduct.execute(req.body)
+    res.status(201).json(product)
+  })
 
-    return res.status(201).json(product)
-
-  }
-
-  findAll = async (req: Request, res: Response) => {
-
+  findAll = asyncHandler(async (req: Request, res: Response) => {
     const products = await this.getProducts.execute()
+    res.json(products)
+  })
 
-    return res.json(products)
-
-  }
-
-  findOne = async (req: Request, res: Response) => {
-
+  findOne = asyncHandler(async (req: Request, res: Response) => {
     const id = Number(req.params.id)
-
     const product = await this.getProduct.execute(id)
+    res.json(product)
+  })
 
-    return res.json(product)
-
-  }
-
-  update = async (req: Request, res: Response) => {
-
+  update = asyncHandler(async (req: Request, res: Response) => {
     const id = Number(req.params.id)
-
     const product = await this.updateProduct.execute({
       id,
       ...req.body
     })
+    res.json(product)
+  })
 
-    return res.json(product)
-
-  }
-
-  delete = async (req: Request, res: Response) => {
-
+  delete = asyncHandler(async (req: Request, res: Response) => {
     const id = Number(req.params.id)
-
     await this.deleteProduct.execute(id)
-
-    return res.status(204).send()
-
-  }
+    res.status(204).send()
+  })
 
 }
