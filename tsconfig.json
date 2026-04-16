@@ -10,7 +10,8 @@
     "skipLibCheck": true,
     "typeRoots": ["./node_modules/@types", "./src/@types"],
     "ignoreDeprecations": "6.0",
-    "baseUrl": "./src",
+    "types": ["node"],
+    "baseUrl": "./src",    
     "paths": {
       "@modules/*": ["modules/*"],
       "@shared/*": ["shared/*"],
