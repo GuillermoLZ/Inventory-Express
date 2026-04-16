@@ -2,10 +2,11 @@ import { Request, Response, NextFunction } from "express"
 import { AppError } from "../errors/app-error"
 
 import { logger } from "@shared/logger/logger"
+import { AuthRequest } from "@shared/types/express-request"
 
 export const errorMiddleware = (
   err: AppError,
-  req: Request,
+  req: AuthRequest,
   res: Response,
   _next: NextFunction
 ) => {

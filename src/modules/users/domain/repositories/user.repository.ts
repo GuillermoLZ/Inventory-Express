@@ -4,6 +4,7 @@ import { User } from "../entities/user.entity"
 
 export interface UserRepository {
   findByEmail(email: string): Promise<User | null>
+  findById(id: number): Promise<User | null>
   create(user: CreateUserDTO): Promise<User>
-  update(data: UpdateUserDTO): Promise<User>
+  update(id: number, data: UpdateUserDTO): Promise<User>
 }

@@ -2,6 +2,7 @@ import prisma from "@infrastructure/database/prisma"
 import { CreateUserDTO } from "@modules/users/application/dtos/create-user.dto"
 import { UpdateUserDTO } from "@modules/users/application/dtos/update-user.dto"
 import { UserRepository } from "@modules/users/domain/repositories/user.repository"
+import { ValidationError } from "@shared/errors/app-error"
 
 export class PrismaUserRepository implements UserRepository {
 
@@ -11,14 +12,19 @@ export class PrismaUserRepository implements UserRepository {
     })
   }
 
-  async update(data: UpdateUserDTO) {
+  async update(id: number, data: UpdateUserDTO) {
+    try {
+      return await prisma.user.update({
+        where: { id },
+        data,
+      })
+    } catch (error: any) {
+      if (error.code === "P2002") {
+        throw new ValidationError("El email ya está en uso")
+      }
 
-    const { id, ...rest } = data
-
-    return prisma.user.update({
-      where: { id },
-      data: rest
-    })
+      throw error
+    }
   }
 
   async findByEmail(email: string) {
