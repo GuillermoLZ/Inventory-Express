@@ -8,11 +8,14 @@ import { DeleteProductUseCase } from "./application/use-cases/delete-product.use
 
 import { ProductController } from "./presentation/controllers/product.controller"
 
+import { SocketEmitter } from "@infrastructure/websocket/socket-emitter"
+
 export const createProductsModule = () => {
 
   const repository = new PrismaProductRepository()
+  const emitter = new SocketEmitter()
 
-  const createProduct = new CreateProductUseCase(repository)
+  const createProduct = new CreateProductUseCase(repository, emitter)
   const getProducts = new GetProductsUseCase(repository)
   const getProduct = new GetProductUseCase(repository)
   const updateProduct = new UpdateProductUseCase(repository)
