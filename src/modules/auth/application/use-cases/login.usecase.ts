@@ -2,6 +2,7 @@ import bcrypt from "bcrypt"
 import { UserRepository } from "@modules/users/domain/repositories/user.repository"
 import { generateToken } from "@infrastructure/auth/jwt"
 import { LoginDTO } from "@modules/auth/application/dtos/login.dto"
+import { UnauthorizedError } from "@shared/errors/app-error"
 
 export class LoginUseCase {
 
@@ -11,11 +12,11 @@ export class LoginUseCase {
 
     const user = await this.userRepository.findByEmail(data.email)
 
-    if (!user) throw new Error("Usuario no existe")
+    if (!user) throw new UnauthorizedError("Credenciales inválidas")
 
     const valid = await bcrypt.compare(data.password, user.password)
 
-    if (!valid) throw new Error("Password incorrecto")
+    if (!valid) throw new UnauthorizedError("Credenciales inválidas")
 
     const token = generateToken(user)
 

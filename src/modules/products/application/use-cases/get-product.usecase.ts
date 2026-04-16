@@ -1,4 +1,5 @@
 import { ProductRepository } from "@modules/products/domain/repositories/product.repository"
+import { NotFoundError } from "@shared/errors/app-error"
 
 export class GetProductUseCase {
 
@@ -8,7 +9,7 @@ export class GetProductUseCase {
     const product = await this.repository.findById(id)
 
     if (!product) {
-      throw new Error("Producto no encontrado")
+      throw new NotFoundError("Producto no encontrado")
     }
 
     return product

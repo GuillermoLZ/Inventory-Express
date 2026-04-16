@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express"
 import { verifyToken } from "@infrastructure/auth/jwt"
 import { UserPayload } from "@shared/types/user-payload"
 import { AuthRequest } from "@shared/types/express-request"
+import { UnauthorizedError } from "@shared/errors/app-error"
 
 export const authMiddleware = (
   req: AuthRequest,
@@ -11,7 +12,7 @@ export const authMiddleware = (
   const authHeader = req.headers.authorization
 
   if (!authHeader) {
-    return res.status(401).json({ error: "No token" })
+    throw new UnauthorizedError("Token requerido")
   }
 
   const token = authHeader.split(" ")[1]
@@ -21,6 +22,6 @@ export const authMiddleware = (
     req.user = decoded
     next()
   } catch (error) {
-    return res.status(401).json({ error: "Token inválido" })
+    throw new UnauthorizedError("Token inválido")
   }
 }
