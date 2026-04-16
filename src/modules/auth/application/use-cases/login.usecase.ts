@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt"
 import { UserRepository } from "@modules/users/domain/repositories/user.repository"
-import { generateToken } from "@lib/jwt"
+import { generateToken } from "@infrastructure/auth/jwt"
 import { LoginDTO } from "@modules/auth/application/dtos/login.dto"
 
 export class LoginUseCase {

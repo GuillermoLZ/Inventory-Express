@@ -1,4 +1,4 @@
-import prisma from "@lib/prisma"
+import prisma from "@infrastructure/database/prisma"
 import { CreateUserDTO } from "@modules/users/application/dtos/create-user.dto"
 import { UpdateUserDTO } from "@modules/users/application/dtos/update-user.dto"
 import { UserRepository } from "@modules/users/domain/repositories/user.repository"

@@ -1,9 +1,4 @@
-import { Request } from "express"
-
-export interface UserPayload {
-  id: number
-  email: string
-}
+import { UserPayload } from "../shared/types/user-payload"
 
 declare module "express-serve-static-core" {
   interface Request {

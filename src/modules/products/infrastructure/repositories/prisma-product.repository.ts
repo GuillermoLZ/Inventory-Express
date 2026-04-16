@@ -1,4 +1,4 @@
-import prisma from "@lib/prisma"
+import prisma from "@infrastructure/database/prisma"
 import { ProductRepository } from "@modules/products/domain/repositories/product.repository"
 import { Product } from "@modules/products/domain/entities/product.entity"
 

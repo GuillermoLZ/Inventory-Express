@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from "express"
-import { verifyToken } from "../lib/jwt"
-import { UserPayload } from "../types/express"
+import { verifyToken } from "@infrastructure/auth/jwt"
+import { UserPayload } from "@shared/types/user-payload"
+import { AuthRequest } from "@shared/types/express-request"
 
 export const authMiddleware = (
-  req: Request,
+  req: AuthRequest,
   res: Response,
   next: NextFunction
 ) => {
