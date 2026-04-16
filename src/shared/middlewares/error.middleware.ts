@@ -1,22 +1,30 @@
 import { Request, Response, NextFunction } from "express"
 import { AppError } from "../errors/app-error"
 
+import { logger } from "@shared/logger/logger"
+
 export const errorMiddleware = (
-  err: Error,
-  _req: Request,
+  err: AppError,
+  req: Request,
   res: Response,
   _next: NextFunction
 ) => {
 
-  if (err instanceof AppError) {
-    return res.status(err.statusCode).json({
-      error: err.message,
-    })
-  }
+  const statusCode = err.statusCode || 500
 
-  console.error(err) // fallback
+  logger.error({
+    message: err.message,
+    stack: err.stack,
+    path: req.path,
+    method: req.method,
+    user: req.user?.id,
+  })
 
-  return res.status(500).json({
-    error: "Error interno del servidor",
+  return res.status(statusCode).json({
+    success: false,
+    error: {
+      code: err.code || "INTERNAL_ERROR",
+      message: err.message || "Error interno",
+    },
   })
 }
