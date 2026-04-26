@@ -13,7 +13,7 @@ const app = express()
 const PORT = process.env.PORT || 3000
 
 const corsConfig = {
-  origin: 'http://localhost:5173',
+  origin: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true // si usas cookies/tokens
