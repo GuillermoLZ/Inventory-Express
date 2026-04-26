@@ -1,6 +1,7 @@
 import "dotenv/config"
 import express from "express"
 import productRoutes from "./routes/product.routes"
+import { initDB } from './lib/db'
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -8,6 +9,12 @@ const PORT = process.env.PORT || 3000
 app.use(express.json())
 app.use("/api/products", productRoutes)
 
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`)
-})
+const startServer = async () => {
+  await initDB()
+
+  app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`)
+  })
+}
+
+startServer()
