@@ -6,8 +6,11 @@ services:
       - "3000:3000"
     depends_on:
       - postgres
+    env_file:
+      - .env
     environment:
       DATABASE_URL: postgresql://postgres:admin@postgres:5432/inventory
+      PORT: 3000
 
   postgres:
     image: postgres:15
